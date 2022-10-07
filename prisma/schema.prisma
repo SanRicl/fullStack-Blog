@@ -1,0 +1,44 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+//model name always have to be in singular
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  createdAt DateTime @default(now())
+  active    Boolean  @default(true)
+  role      Role     @default(USER)
+  //relations between table. "A user can have multiple photos".
+  photos    Photo[]
+
+  @@map("users")
+}
+
+//fix values -> these values can be used by any table
+enum Role {
+  USER
+  ADMIN
+}
+
+model Photo {
+  id     Int     @id @default(autoincrement())
+  url    String
+  legend String?
+  userId Int
+
+  // each photo has a relation with it owner, identified by user id. "The photo with Id 5, was taken by user with Id 3" | "multiple photos has a unique owner"
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("photos")
+}
