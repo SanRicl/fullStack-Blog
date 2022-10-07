@@ -11,4 +11,8 @@ export const navigationLinks = [
     label: "Blog",
     path: ["/blog", "/blog/[id]"],
   },
+  {
+    label: 'Usuarios',
+    path: ["/usuarios"]
+  }
 ];

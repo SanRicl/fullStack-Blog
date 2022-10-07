@@ -6,6 +6,12 @@ import Layout from "../../components/Layout";
 
 import { Post } from "../../types/Post";
 
+import styled from "styled-components";
+
+const Container = styled.div`
+ padding: 0px 20px;
+`;
+
 type Props = {
   posts: Post[];
 };
@@ -13,7 +19,7 @@ type Props = {
 const Blog = ({ posts }: Props) => {
   return (
     <Layout>
-    <div>
+    <Container>
       <h1>Blog</h1>
       {posts.map((posts) => (
         <div key={posts.id}>
@@ -24,7 +30,7 @@ const Blog = ({ posts }: Props) => {
           </ul>
         </div>
       ))}
-    </div>
+    </Container>
     </Layout>
   );
 };

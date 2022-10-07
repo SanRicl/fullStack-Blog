@@ -4,11 +4,17 @@ import React from "react";
 import Layout from "../../components/Layout";
 import { Users } from "../../utils/users";
 
+import styled from "styled-components";
+
+const Container = styled.div`
+ padding: 0px 20px;
+`;
+
 const SobreItem = () => {
   return (
     <Layout>
-      <div>
-        <h1>Pagina sobre: </h1>
+      <Container>
+        <h3>Pagina sobre: </h3>
         {Users.map((item) => (
           <ul key={item.id}>
             <Link href={`/sobre/${encodeURIComponent(item.name)}`}>
@@ -16,7 +22,7 @@ const SobreItem = () => {
             </Link>
           </ul>
         ))}
-      </div>
+      </Container>
     </Layout>
   );
 };

@@ -3,7 +3,11 @@ import { ParsedUrlQuery } from "querystring";
 import React from "react";
 import Layout from "../../../components/Layout";
 import { Post } from "../../../types/Post";
+import styled from "styled-components";
 
+const Container = styled.div`
+ padding: 0px 20px;
+`;
 type Props = {
   post: Post;
 };
@@ -11,10 +15,10 @@ type Props = {
 const Posts = ({ post }: Props) => {
   return (
     <Layout>
-      <div>
-        <h2>{post.title}</h2>
+      <Container>
+        <h3>{post.title}</h3>
         <p>{post.body}</p>
-      </div>
+      </Container>
     </Layout>
   );
 };
