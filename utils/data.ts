@@ -13,6 +13,6 @@ export const navigationLinks = [
   },
   {
     label: 'Usuarios',
-    path: ["/usuarios"]
+    path: ["/usuarios", '/usuarios/novo'],
   }
 ];
