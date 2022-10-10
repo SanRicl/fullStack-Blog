@@ -1,14 +1,17 @@
 import type { NextPage } from "next";
+import { signIn, signOut, useSession } from "next-auth/react";
 import Head from "next/head";
 
 import styled from "styled-components";
-import Layout from "../components/Layout";
+import Layout from "../components/Layout/index";
 
 const Container = styled.div`
   text-align: center;
 `;
 
 const Home: NextPage = () => {
+  const { data: session } = useSession();
+  
   return (
     <Layout>
       <>
@@ -19,7 +22,13 @@ const Home: NextPage = () => {
         </Head>
 
         <Container>
-          <h1>Bem Vindo(a)!</h1>
+          {!session && <button onClick={() => signIn()}>Login</button>}
+          {session && 
+          <>
+           <h1>Bem Vindo(a) {session.user?.name}!</h1>
+           <button onClick={() => signOut()}>LogOut</button>
+          </>
+          }
         </Container>
       </>
     </Layout>
