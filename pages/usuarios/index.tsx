@@ -6,6 +6,11 @@ import { Users } from "../../types/Users";
 import styled from "styled-components";
 import Link from "next/link";
 import axios from "axios";
+import { signOut, useSession } from "next-auth/react";
+import { AuthUser } from "../../types/AuthUser";
+import { GetServerSideProps } from "next";
+import { unstable_getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]";
 
 const Button = styled.button`
   padding: 10px;
@@ -14,6 +19,7 @@ const Button = styled.button`
 
 type Props = {
   users: Users[];
+  loggedUser: AuthUser;
 };
 
 const Usuarios = ({ users }: Props) => {
@@ -21,6 +27,8 @@ const Usuarios = ({ users }: Props) => {
   const [loading, setLoading] = useState(false);
   const [userList, setUserList] = useState<Users[]>(users);
   const [showMore, setShowMore] = useState(true);
+
+ 
 
   const handleLoadMore = async () => {
     if (!loading) {
@@ -49,6 +57,7 @@ const Usuarios = ({ users }: Props) => {
         <Link href="/usuarios/novo" passHref>
           <Button>adcionar novo usuario </Button>
         </Link>
+        <button onClick={() => signOut()}>Logout</button>
       </div>
     </Layout>
   );
@@ -56,10 +65,19 @@ const Usuarios = ({ users }: Props) => {
 
 export default Usuarios;
 
-export const getServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
+
+  if (!session) return { redirect: { destination: "/", permanent: true } };
+
   const users = await api.getAllUsers(0);
   return {
     props: {
+      loggedUser: session.user,
       users,
     },
   };
