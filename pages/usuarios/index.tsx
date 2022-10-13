@@ -6,7 +6,7 @@ import { Users } from "../../types/Users";
 import styled from "styled-components";
 import Link from "next/link";
 import axios from "axios";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { AuthUser } from "../../types/AuthUser";
 import { GetServerSideProps } from "next";
 import { unstable_getServerSession } from "next-auth";

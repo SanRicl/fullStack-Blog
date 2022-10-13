@@ -1,5 +1,6 @@
 import { NextApiHandler } from "next";
 import { api } from "../../../libs/api";
+import { hash } from "bcrypt";
 
 const handlerGet: NextApiHandler = async (req, res) => {
   const { page } = req.query;
@@ -10,9 +11,11 @@ const handlerGet: NextApiHandler = async (req, res) => {
 };
 
 const handlerPost: NextApiHandler = async (req, res) => {
-  const { name, email } = req.body;
+  const { name, email, password } = req.body;
 
-   const newUser = await api.addUser(name, email).catch(() => {
+  const hashedPassword = await hash(password, 8)
+
+   const newUser = await api.addUser(name, email, hashedPassword).catch(() => {
       res.json({ message: "Usuario ja existe." });
     });
 
